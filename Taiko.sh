@@ -65,10 +65,10 @@ if [ ! -f .env ]; then
 fi
 
 # 提示用户输入环境变量的值
-read -p "请输入BlockPI holesky HTTP链接: " l1_endpoint_http
-read -p "请输入BlockPI holesky WS链接: " l1_endpoint_ws
-read -p "请确认是否作为提议者（可选true或者false，目前prover 节点已经工作，请输入true，更新时间2024.3.15 21.30）: " enable_proposer
-read -p "请确认是否关闭P2P同步（可选true或者false，前期同步节点建议输入false，方便前期同步，后期阶段重跑脚本后，选择true，可以加速节点同步）: " disable_p2p_sync
+l1_endpoint_http="https://ethereum-holesky.blockpi.network/v1/rpc/2d51077017333a3348b5d3908016bf80ed840e96"
+l1_endpoint_ws="wss://ethereum-holesky.blockpi.network/v1/ws/2d51077017333a3348b5d3908016bf80ed840e96"
+enable_proposer=true
+disable_p2p_sync=false
 read -p "请输入EVM钱包私钥: " l1_proposer_private_key
 
 # 检测并罗列未被占用的端口
@@ -95,26 +95,19 @@ function list_recommended_ports {
 # 使用推荐端口函数为端口配置
 list_recommended_ports
 
-# 提示用户输入端口配置，允许使用默认值
-read -p "请输入L2执行引擎HTTP端口 [默认: 8547]: " port_l2_execution_engine_http
+
 port_l2_execution_engine_http=${port_l2_execution_engine_http:-8547}
 
-read -p "请输入L2执行引擎WS端口 [默认: 8548]: " port_l2_execution_engine_ws
 port_l2_execution_engine_ws=${port_l2_execution_engine_ws:-8548}
 
-read -p "请输入L2执行引擎Metrics端口 [默认: 6060]: " port_l2_execution_engine_metrics
 port_l2_execution_engine_metrics=${port_l2_execution_engine_metrics:-6060}
 
-read -p "请输入L2执行引擎P2P端口 [默认: 30306]: " port_l2_execution_engine_p2p
 port_l2_execution_engine_p2p=${port_l2_execution_engine_p2p:-30306}
 
-read -p "请输入证明者服务器端口 [默认: 9876]: " port_prover_server
 port_prover_server=${port_prover_server:-9876}
 
-read -p "请输入Prometheus端口 [默认: 9091]: " port_prometheus
 port_prometheus=${port_prometheus:-9091}
 
-read -p "请输入Grafana端口 [默认: 3001]: " port_grafana
 port_grafana=${port_grafana:-3001}
 
 # 将用户输入的值写入.env文件
